@@ -9,7 +9,6 @@ import {
   updateLikeInSelectedBlog,
   updateSaveInSelectedBlog,
 } from "../utils/selectedBlogSlice";
-import Comment from "./comment";
 import { setIsOpen } from "../utils/commentSlice";
 import { handleSaveBlog } from "../components/Homepage";
 import formatDate from "../utils/formatDate";
@@ -352,7 +351,7 @@ function BlogPage() {
         )} 
       </div>
 
-      {isOpen && <Comment />}
+      {isOpen && <Comment/>}
     </div>
   );
 }
