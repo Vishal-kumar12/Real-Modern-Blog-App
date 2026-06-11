@@ -77,7 +77,7 @@ const navigate = useNavigate()
     },[type])
   return (
     <div className="flex justify-center items-center h-[650px] w-full bg-gray-100">
-        <form action="" className="flex flex-col items-center border border-black min-w-[25%] gap-5 p-5 rounded-xl">
+        <form action="" className="flex flex-col items-center border border-black min-w-[25%] gap-5 p-5 max-sm:p-2 rounded-xl">
             <h1 className="text-3xl max-sm:text-2xl">{type== "signup"?" Sign Up" : "Sign In"}</h1>
             {
                 type=="signup" && (

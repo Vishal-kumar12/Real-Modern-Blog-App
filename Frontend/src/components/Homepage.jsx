@@ -35,7 +35,7 @@ const Homepage = () =>{
     
 
     const [page, setPage] = useState(1)
-    const tag = ["node", "react", "deveops", "hello", "flutter", "dddddddddddd"]
+    const tag = ["node", "travelling", "Education", "reading", "mern developer"]
     
    
     const {searchBlogs, hasMore} = usePagination({},"blogs", page, 5)

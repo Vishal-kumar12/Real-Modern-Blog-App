@@ -13,6 +13,7 @@ import { setIsOpen } from "../utils/commentSlice";
 import { handleSaveBlog } from "../components/Homepage";
 import formatDate from "../utils/formatDate";
 import { updateFollowing } from "../utils/userSlice";
+import Comment from "./Comment";
 
 function BlogPage() {
   const { token, email, userId, name } = useSelector((state) => state.user);
@@ -135,11 +136,12 @@ function BlogPage() {
 
     return () => {
       dispatch(setIsOpen(false));
-
+      
       if (
         window.location.pathname != `/blog/${blogId}` &&
         window.location.pathname != `/edit-blog/${blogId}`
       ) {
+
         dispatch(removeSelectedBlog());
 
    
@@ -313,7 +315,7 @@ function BlogPage() {
                 } else if (block.type === "checkbox") {
                   return (
                     <div key={id}>
-                      <label key={index}>
+                      <label key={id}>
                         <input
                           type="checkbox"
                           checked={item.checked}
@@ -328,16 +330,16 @@ function BlogPage() {
                 if (block.data.style == "ordered") {
                   return (
                     <ol key={id} className="list-decimal my-4">
-                      {block.data.items.map((item, index) => (
-                        <li key={index}>{item?.content}</li>
+                      {block.data.items.map((item, id) => (
+                        <li key={id}>{item?.content}</li>
                       ))}
                     </ol>
                   );
                 } else {
                   return (
-                    <ul key={index} className="list-disc my-4">
-                      {block.data.items.map((item, index) => (
-                        <li key={index}>{item?.content}</li>
+                    <ul key={id} className="list-disc my-4">
+                      {block.data.items.map((item, id) => (
+                        <li key={id}>{item?.content}</li>
                       ))}
                     </ul>
                   );

@@ -292,7 +292,7 @@ async function googleAuth(req, res) {
       }
     }
 
-    let newUser = User.create({
+    let newUser = await  User.create({
       name,
       email,
       username: email.split("@")[0] + randomUUID(),
@@ -309,10 +309,15 @@ async function googleAuth(req, res) {
       success: true,
       message: "user registered successfully",
       user: {
-        userId: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        token,
+            userId: newUser._id,
+            name: newUser.name,
+            email: newUser.email,
+            username: newUser.username,
+            bio: newUser.bio,
+            profilePic: newUser.profilePic,
+            showLikeBlogs: newUser.showLikeBlogs,
+            showSavedBlogs: newUser.showSavedBlogs,
+            token,
       },
     });
   } catch (error) {

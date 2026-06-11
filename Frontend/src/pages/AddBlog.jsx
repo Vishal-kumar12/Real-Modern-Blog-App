@@ -10,6 +10,7 @@ import CodeTool from '@editorjs/code';
 import Embed from '@editorjs/embed';
 import ImageTool from '@editorjs/image';
 import EditorjsList from '@editorjs/list';
+import { removeSelectedBlog } from "../utils/selectedBlogSlice";
 function AddBlog() {
    const dispatch = useDispatch()
   const {id} = useParams()
@@ -39,6 +40,7 @@ function AddBlog() {
 
 
   async function handleAddBlog() {
+
     formData.append("title", blogData.title)
     formData.append("description", blogData.description)
     formData.append("image", blogData.image)
@@ -229,6 +231,12 @@ fetchBlogById()
   },[id])
 
   useEffect(()=>{
+    if(window.location.pathname  == '/add-blog'){
+      // setBlogData(()=> {})
+      // editorjsRef.current = null
+      dispatch(removeSelectedBlog())
+
+    }
     if(editorjsRef.current === null){
      initializeEditorjs()
     }
@@ -250,7 +258,7 @@ fetchBlogById()
 
       <label htmlFor="image" className="">
        
-           { blogData.image ?
+           { blogData?.image ?
            <div className="rounded-xl">
                   <img  src={typeof(blogData.image) == "string" ? blogData.image : URL.createObjectURL(blogData.image)} className="aspect-video object-cover rounded-xl" alt="" /> 
            </div>
@@ -278,7 +286,7 @@ fetchBlogById()
         onChange={(e) =>
           setBlogData((prev) => ({ ...prev, title: e.target.value }))
         }
-        value={blogData.title}
+        value={blogData?.title}
         className="w-full p-2 my-2 placeholder:text-xl focus:outline-none border text-xl"
 
       />
@@ -300,12 +308,12 @@ fetchBlogById()
       />
       <div className="flex justify-between">
          <p className=" text-xs opacity-50">press Enter to add tags</p>
-         {blogData.tags.length >10 && toast.error("you can add maximum 10 tags only")}
-       <p className=" text-xs opacity-50 ">{blogData.tags.length < 10?  (10 - blogData.tags.length) : "No"} more tag you can add</p>
+         {blogData?.tags?.length >10 && toast.error("you can add maximum 10 tags only")}
+       <p className=" text-xs opacity-50 ">{blogData?.tags?.length < 10?  (10 - blogData.tags.length) : "No"} more tag you can add</p>
 
       </div>
        <div className="flex flex-wrap gap-2">
-        {blogData.tags && blogData.tags.map((tag,index)=>(
+        {blogData?.tags && blogData?.tags.map((tag,index)=>(
           <div key={index} className="bg-gray-400 flex gap-2 items-center text-xl p-1 rounded-xl mt-2 min-w-32 hover:text-white hover:bg-blue-400">
           <p className="">{tag}</p>
           <i onClick={()=> handleDeleteTag(index)} className="fi fi-rr-cross-circle mt-2 text-xl"></i>
@@ -330,7 +338,7 @@ fetchBlogById()
         onChange={(e) =>
           setBlogData((prev) => ({ ...prev, description: e.target.value }))
         }
-        value={blogData.description}
+        value={blogData?.description}
         className=" w-full focus:outline-none tex-xl p-2  border rounded-xl resize-none my-2"
         />
 
@@ -341,7 +349,7 @@ fetchBlogById()
         <h1 className="text-2xl">Draft</h1>
 
       
-        <select value={blogData.draft}  onChange={(e)=> setBlogData((prev)=> ({...prev , draft: e.target.value =="true" ? true : false }))} name="" id="" className=" w-full focus:outline-none tex-xl p-2  border rounded-xl  my-2">
+        <select value={blogData?.draft}  onChange={(e)=> setBlogData((prev)=> ({...prev , draft: e.target.value =="true" ? true : false }))} name="" id="" className=" w-full focus:outline-none tex-xl p-2  border rounded-xl  my-2">
           <option value="true">True</option>
           <option value="false">False</option>
         </select>
@@ -362,7 +370,7 @@ fetchBlogById()
       <button 
        onClick={id? handleEditBlog :handleAddBlog}
        className="bg-blue-700 text-white p-2 rounded-xl border text-2xl">
-        {id? "Update Blog" : blogData.draft? "Save as a draft" : "Post Blog"}
+        {id? "Update Blog" : blogData?.draft? "Save as a draft" : "Post Blog"}
         </button>
       
     </div>

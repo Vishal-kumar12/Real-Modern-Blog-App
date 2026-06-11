@@ -1,18 +1,20 @@
-import { Link, Outlet, useNavigate } from "react-router-dom"
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
 import logo from '../assets/logo.svg'
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { logout } from "../utils/userSlice"
+
+
 
 const Navbar = () =>{
     const {token, name, username, profilePic} = useSelector(slice=> slice.user)
     const [userPopup, setUserPopup] = useState(false)
     const [userSearch , setUserSearch] = useState(null)
     const [page, setPage] = useState(1)
-    const [showSearch, setShowSearch] = useState(true)
+    const [showSearch, setShowSearch] = useState(false)
     const dispatch = useDispatch()
     const navigate= useNavigate()
-
+    
     async function handleUserPopup(){
         setUserPopup((prev)=> !prev)
         
@@ -31,6 +33,7 @@ const Navbar = () =>{
        dispatch(logout())
        navigate('/')
     }
+
 
 
    
