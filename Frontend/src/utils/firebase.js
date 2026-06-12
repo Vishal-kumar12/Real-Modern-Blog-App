@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import {getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import {getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth"
 
-
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 
 
@@ -26,10 +26,29 @@ const provider = new GoogleAuthProvider()
    
 
 
+// export async function googleAuth(){
+//     try {
+//         let data = await signInWithPopup(auth, provider)
+//         return data.user
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+
+
 export async function googleAuth(){
     try {
-        let data = await signInWithPopup(auth, provider)
-        return data.user
+        let data
+
+        if (isMobile) {
+        data = await signInWithRedirect(auth, provider);
+
+        } else {
+        data = await signInWithPopup(auth, provider);
+        }
+
+     return data.user
     } catch (error) {
         console.log(error)
     }

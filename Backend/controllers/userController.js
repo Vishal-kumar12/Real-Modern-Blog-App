@@ -171,7 +171,7 @@ async function createUser(req, res) {
         <a href="${FRONTEND_URL}verify-email/${verificationToken}" >verify email</a>`,
           });
         }
-        sendEmail();
+        await sendEmail();
 
         return res.status(400).json({
           success: false,
@@ -212,7 +212,7 @@ async function createUser(req, res) {
         <a href="${FRONTEND_URL}verify-email/${verificationToken}" >verify email</a>`,
       });
     }
-    sendEmail();
+    await sendEmail();
 
 
     return res.status(200).json({
@@ -400,7 +400,7 @@ async function login(req, res) {
         <a href="${FRONTEND_URL}verify-email/${verificationToken}" >verify email</a>`,
         });
       }
-      sendEmail();
+      await sendEmail();
 
       return res.status(400).json({
         success: false,

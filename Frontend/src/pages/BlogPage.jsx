@@ -85,6 +85,8 @@ function BlogPage() {
   }
 
   async function handleFollow(creatorId) {
+    if(token){
+
     try {
       setIsFollowing((prev) => !prev);
 
@@ -103,12 +105,26 @@ function BlogPage() {
     } catch (error) {
       toast.error(error.response.data.message)
     }
+    }else{
+      toast.error("You cannot follow user without login");
+
+    }
+
+
+
   }
 
   async function handleSaveInFrontendAlso(e, singleBlogId, token) {
+    if(token){
+
     handleSaveBlog(e, singleBlogId, token);
     setIsSaved((prev) => !prev);
     dispatch(updateSaveInSelectedBlog(userId));
+    }else{
+      toast.error("You cannot save this blog without login");
+
+    }
+
   }
 
   async function handleDeleteBlog() {
@@ -153,7 +169,7 @@ function BlogPage() {
       <div className="max-sm:max-w-full max-sm:p-2 max-lg:max-w-[70%]  max-w-[55%] mx-auto  mt-3 ">
         {singleBlog ? (
           <div className="flex flex-col gap-3 ">
-            <h1 className="text-6xl max-sm:text-3xl max-md:text-4xl font-semibold">
+            <h1 className="text-6xl max-sm:text-2xl max-md:text-4xl font-semibold">
               {singleBlog.title}
             </h1>
             <h1 className="text-3xl max-sm:text-xl max-md:text-3xl">
@@ -173,21 +189,21 @@ function BlogPage() {
               <div className="">
                 <div className="flex gap-2 items-center">
                   <Link to={`/@${singleBlog.creator.username}`}>
-                    <p className="text-2xl hover:underline">
+                    <p className="max-sm:text-sm  text-2xl hover:underline">
                       {singleBlog.creator.name}
                     </p>
                   </Link>
                   <button
                     onClick={() => handleFollow(singleBlog.creator._id)}
-                    className="p-1 text-xl rounded-xl border border-black "
+                    className="p-1 max-sm:text-sm text-xl rounded-xl border border-black "
                   >
                     {isFollowing ? "following" : "follow"}
                   </button>
                 </div>
 
                 <div className="flex gap-2">
-                  <p>6 min read</p>
-                  <p>{formatDate(singleBlog.createdAt)}</p>
+                  {/* <p>6 min read</p> */}
+                  <p className="max-sm:text-sm" >{formatDate(singleBlog.createdAt)}</p>
                 </div>
               </div>
             </div>
@@ -202,7 +218,7 @@ function BlogPage() {
 
             <div className="">
               {email === singleBlog.creator.email && (
-                <div className="flex gap-2 border border-black">
+                <div className="flex gap-2 border">
                   <Link to={`/edit-blog/${blogId}`}>
                     <button className=" p-2 text-2xl rounded-xl bg-green-400 text-white">
                       Edit
@@ -268,21 +284,21 @@ function BlogPage() {
                 if (block.type === "header") {
                   if (block.data.level == 4) {
                     return (
-                      <h4
+                      <h4 className="mt-2"
                         key={id}
                         dangerouslySetInnerHTML={{ __html: block.data.text }}
                       ></h4>
                     );
                   } else if (block.data.level == 2) {
                     return (
-                      <h2
+                      <h2 className="mt-2"
                         key={id}
                         dangerouslySetInnerHTML={{ __html: block.data.text }}
                       ></h2>
                     );
                   } else if (block.data.level == 3) {
                     return (
-                      <h3
+                      <h3 className="mt-2"
                         key={id}
                         dangerouslySetInnerHTML={{ __html: block.data.text }}
                       ></h3>
@@ -290,14 +306,14 @@ function BlogPage() {
                   }
                 } else if (block.type === "paragraph") {
                   return (
-                    <p
+                    <p className="mt-2"
                       key={id}
                       dangerouslySetInnerHTML={{ __html: block.data.text }}
                     ></p>
                   );
                 } else if (block.type === "image") {
                   return (
-                    <div key={id}>
+                    <div key={id} className="mt-2">
                       <div>
                         <img src={block.data.file.url} alt="" />
                         <p className="text-center">{block.data.caption}</p>
@@ -306,7 +322,7 @@ function BlogPage() {
                   );
                 } else if (block.type === "code") {
                   return (
-                    <div key={id}>
+                    <div key={id}> className="mt-2"
                       <pre className="code-block">
                         <code>{block.data.code}</code>
                       </pre>
@@ -314,7 +330,7 @@ function BlogPage() {
                   );
                 } else if (block.type === "checkbox") {
                   return (
-                    <div key={id}>
+                    <div key={id} className="mt-2">
                       <label key={id}>
                         <input
                           type="checkbox"
@@ -329,7 +345,7 @@ function BlogPage() {
                 else if (block.type == "List") {
                 if (block.data.style == "ordered") {
                   return (
-                    <ol key={id} className="list-decimal my-4">
+                    <ol key={id} className="list-decimal my-2">
                       {block.data.items.map((item, id) => (
                         <li key={id}>{item?.content}</li>
                       ))}
@@ -337,7 +353,7 @@ function BlogPage() {
                   );
                 } else {
                   return (
-                    <ul key={id} className="list-disc my-4">
+                    <ul key={id} className="list-disc my-2">
                       {block.data.items.map((item, id) => (
                         <li key={id}>{item?.content}</li>
                       ))}
@@ -345,14 +361,17 @@ function BlogPage() {
                   );
                 }
               }
+             
+
               })}
+
           </div>
-         
+       
       </div> ) : (
           <h1>Loading</h1>
         )} 
       </div>
-
+        <hr className="h-2"/>
       {isOpen && <Comment/>}
     </div>
   );
