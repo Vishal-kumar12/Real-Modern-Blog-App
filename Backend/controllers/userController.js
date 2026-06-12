@@ -156,8 +156,8 @@ async function createUser(req, res) {
         });
       } else {
         let verificationToken = await generateJWT({
-          email: newUser.email,
-          id: newUser._id,
+          email: checkForExistingUser.email,
+          id: checkForExistingUser._id,
         });
 
         // verify emailcode
@@ -175,7 +175,7 @@ async function createUser(req, res) {
 
         return res.status(400).json({
           success: false,
-          message: "verify your email",
+          message: "verify your email link sent on your registered email",
         });
       }
     }
@@ -217,9 +217,10 @@ async function createUser(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: "verify email sent on your registered email",
+      message: "verify your email link sent on your registered email",
     });
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: "please try again",
@@ -404,7 +405,7 @@ async function login(req, res) {
 
       return res.status(400).json({
         success: false,
-        message: "verify your email",
+        message: "verify your email link sent on your registered email",
       });
     }
 
