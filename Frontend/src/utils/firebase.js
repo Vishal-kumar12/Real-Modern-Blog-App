@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth"
+import {getAuth, getRedirectResult, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth"
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -42,14 +42,33 @@ export async function googleAuth(){
         let data
 
         if (isMobile) {
-        data = await signInWithRedirect(auth, provider);
+        await signInWithRedirect(auth, provider);
+        return
 
         } else {
         data = await signInWithPopup(auth, provider);
+        return data.user
         }
 
-     return data.user
+     
     } catch (error) {
         console.log(error)
     }
 }
+
+
+
+
+export async function handleRedirectResult() {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result) {
+      return result.user;
+    }
+  } catch (error) {
+    console.error("Redirect error:", error);
+    toast.error("Authentication failed. Please try again.");
+    return null;
+  }
+}
+

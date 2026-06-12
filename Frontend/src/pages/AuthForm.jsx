@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { login } from "../utils/userSlice"
 import Input from "./Input"
-import { googleAuth } from "../utils/firebase"
+import { googleAuth, handleRedirectResult } from "../utils/firebase"
 import googleicon from "../assets/googleicon.svg"
 
 function AuthForm({type}) {
@@ -49,23 +49,58 @@ const navigate = useNavigate()
     async function handleGoogleAuth() {
         try {
 
-            let data = await googleAuth()
+            let userData = await googleAuth()
+            if(!userData){
+                return 
+            }
+
+             const idToken = await userData.getIdToken();
+
             let res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/google-auth`,
                 {
-                    accessToken: data.accessToken
+                    accessToken: idToken
                 }
             )
             dispatch(login(res.data.user))
             toast.success(res.data.message)
             navigate('/')
         } catch (error) {
-            toast.error(error.response.data.message)
+              console.error("Google Auth Error:", error);
+             toast.error(error.response?.data?.message || "Authentication failed");
         }
         
     }
 
 
    
+
+    useEffect(() => {
+    // Import the handleRedirectResult from your firebase utils
+    const handleRedirect = async () => {
+      try {
+        const userData = await handleRedirectResult();
+        if (userData) {
+          const idToken = await userData.getIdToken();
+          const res = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/google-auth`,
+            {
+              accessToken: idToken,
+            }
+          );
+          dispatch(login(res.data.user));
+          toast.success(res.data.message);
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Redirect Error:", error);
+        toast.error("Authentication failed");
+      }
+    };
+
+    handleRedirect();
+  }, [dispatch, navigate]);
+
+
 
 
     useEffect(()=>{
@@ -75,6 +110,12 @@ const navigate = useNavigate()
                 password:""
             })
     },[type])
+
+
+
+
+
+
   return (
     <div className="flex justify-center items-center h-[650px] w-full bg-gray-100">
         <form action="" className="flex flex-col items-center border border-black min-w-[25%] gap-5 p-5 max-sm:p-2 rounded-xl">
