@@ -37,27 +37,66 @@ const provider = new GoogleAuthProvider()
 
 
 
-export async function googleAuth(){
-    try {
-        let data
+// export async function googleAuth(){
+//     try {
+//         let data
 
-        if (isMobile) {
-        await signInWithRedirect(auth, provider);
-        return
+//         if (isMobile) {
+//         await signInWithRedirect(auth, provider);
+//         return
 
-        } else {
-        data = await signInWithPopup(auth, provider);
-        return data.user
-        }
+//         } else {
+//         data = await signInWithPopup(auth, provider);
+//         return data.user
+//         }
 
      
-    } catch (error) {
-        console.log(error)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+
+
+
+// export async function handleRedirectResult() {
+//   try {
+//     const result = await getRedirectResult(auth);
+//     if (result) {
+//       return result.user;
+//     }
+//   } catch (error) {
+//     console.error("Redirect error:", error);
+//     toast.error("Authentication failed. Please try again.");
+//     return null;
+//   }
+// }
+
+
+
+
+export async function googleAuth() {
+  try {
+    if (isMobile) {
+      // Use redirect method for mobile
+      await signInWithRedirect(auth, provider);
+
+      // Get redirect result
+      const result = await getRedirectResult(auth);
+      if (result) {
+        return result.user;
+      }
+    } else {
+      // Use popup for desktop
+      const result = await signInWithPopup(auth, provider);
+      return result.user;
     }
+  } catch (error) {
+    console.error("Authentication error:", error);
+    toast.error("Please try again later");
+    return null;
+  }
 }
-
-
-
 
 export async function handleRedirectResult() {
   try {
@@ -71,4 +110,3 @@ export async function handleRedirectResult() {
     return null;
   }
 }
-

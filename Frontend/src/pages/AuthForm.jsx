@@ -76,7 +76,7 @@ const navigate = useNavigate()
 
    
 
-    useEffect(() => {
+ useEffect(() => {
     // Import the handleRedirectResult from your firebase utils
     const handleRedirect = async () => {
       try {
@@ -100,10 +100,8 @@ const navigate = useNavigate()
     };
 
     handleRedirect();
-  }, []);
+  }, [dispatch, navigate]);
 
-
-// dispatch, navigate
 
     useEffect(()=>{
            setUserData({
