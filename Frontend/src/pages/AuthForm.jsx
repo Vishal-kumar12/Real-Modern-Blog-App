@@ -46,6 +46,8 @@ const navigate = useNavigate()
         
     }
 
+
+     
     async function handleGoogleAuth() {
         try {
 
@@ -98,10 +100,10 @@ const navigate = useNavigate()
     };
 
     handleRedirect();
-  }, [dispatch, navigate]);
+  }, []);
 
 
-
+// dispatch, navigate
 
     useEffect(()=>{
            setUserData({
