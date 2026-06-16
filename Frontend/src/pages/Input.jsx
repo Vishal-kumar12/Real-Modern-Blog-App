@@ -10,7 +10,7 @@ function Input({type, placeholder, setUserData, key2, icon, val}) {
               value={val}
               onChange={(e)=> setUserData(prev=> ({...prev, [key2]:e.target.value}))}
              placeholder={placeholder} 
-             className="focus:outline w-full p-2 text-xl rounded-xl pl-9"/>
+             className="focus:outline w-full p-2 text-xl rounded-xl pl-9 max-sm:text-lg"/>
              {
                 type=="password" &&(
                 showpass ? <i onClick={()=> setShowPass((prev)=> !prev)} className="fi fi-rr-eye absolute right-0 mt-3 mr-1"></i> : <i onClick={()=> setShowPass((prev)=> !prev)} className="fi fi-rs-crossed-eye absolute right-0 mt-3 mr-1"></i>   

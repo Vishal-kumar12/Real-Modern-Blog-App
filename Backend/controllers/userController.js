@@ -350,9 +350,9 @@ async function login(req, res) {
     }
 
     let checkForExistingUser = await User.findOne({ email }).select(
-      "password isVerify name email profilePic username bio showLikeBlogs showSavedBlogs",
+      "password isVerify name email profilePic username bio showLikeBlogs showSavedBlogs googleAuth",
     );
-
+     
     if (!checkForExistingUser) {
       return res.status(400).json({
         success: false,
@@ -436,6 +436,7 @@ async function login(req, res) {
       },
     });
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: "please try again",

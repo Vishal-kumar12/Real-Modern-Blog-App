@@ -11,6 +11,7 @@ import googleicon from "../assets/googleicon.svg"
 function AuthForm({type}) {
 const navigate = useNavigate()
     const dispatch = useDispatch()
+ 
      const [userData ,setUserData] = useState({name:"", email:"", password:""})
         async function handleSubmit(e){
             e.preventDefault()
@@ -118,12 +119,13 @@ const navigate = useNavigate()
 
   return (
     <div className="flex justify-center items-center h-[650px] w-full bg-gray-100">
-        <form action="" className="flex flex-col items-center border border-black min-w-[25%] gap-5 p-5 max-sm:p-2 rounded-xl">
+      <div className="flex flex-col items-center border border-black min-w-[25%] gap-5 p-5 max-sm:p-2 rounded-xl">
+        <form action="" className="flex flex-col items-center gap-5 p-5 max-sm:p-2 rounded-xl">
             <h1 className="text-3xl max-sm:text-2xl">{type== "signup"?" Sign Up" : "Sign In"}</h1>
             {
                 type=="signup" && (
            
-            <Input type={"text"} placeholder={"Enter Your Name"} setUserData={setUserData} key2={"name"} icon={"fi-br-user"} val={userData.name}/>
+            <Input  type={"text"} placeholder={"Enter Your Name"} setUserData={setUserData} key2={"name"} icon={"fi-br-user"} val={userData.name}/>
          
                 )
             }
@@ -136,12 +138,15 @@ const navigate = useNavigate()
             
            
 
-           <button onClick={handleSubmit} className="focus:outline w-[50%] p-2 text-xl  border border-black rounded-xl">{type=="signup" ?"Register" : "signin"}</button>
+           <button onClick={handleSubmit} className="focus:outline w-[50%] p-2 text-xl  border border-black rounded-xl max-sm:text-lg">{type=="signup" ?"Register" : "signin"}</button>
+
+        </form>
+
 
             <p className="text-xl font-semibold">or</p>
            <div onClick={handleGoogleAuth}>
-             <div className="display flex items-center gap-2 border rounded-xl p-2">
-                <p className="text-xl ">Continue With Google</p>
+             <div className="display flex items-center gap-2 border rounded-xl p-2 cursor-pointer">
+                <p className="text-xl max-sm:text-lg">Continue With Google</p>
                 <div className="w-6 mt-1">
                     <img src={googleicon} alt="" />
                 </div>
@@ -150,8 +155,10 @@ const navigate = useNavigate()
 
      {type=="signin" ? <p>Don`t have an account <Link to={'/signup'}>signup</Link></p> : <p>Already have an account <Link to={'/signin'}>signin</Link></p>}
 
-        </form>
+        {/* </form> */}
 
+
+    </div>
     </div>
   )
 }
