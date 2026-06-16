@@ -181,7 +181,7 @@ function BlogPage() {
                 <div className="w-10 h-10">
                   <img
                     className="rounded-xl"
-                    src={`https://api.dicebear.com/9.x/initials/svg?seed=${name}`}
+                    src={`https://api.dicebear.com/9.x/initials/svg?seed=${singleBlog.creator.name}`}
                     alt=""
                   />
                 </div>

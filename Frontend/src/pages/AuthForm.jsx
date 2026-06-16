@@ -11,7 +11,7 @@ import googleicon from "../assets/googleicon.svg"
 function AuthForm({type}) {
 const navigate = useNavigate()
     const dispatch = useDispatch()
- 
+    const [loginWithGoogle, setLoginWithGoogle] =  useState(false)
      const [userData ,setUserData] = useState({name:"", email:"", password:""})
         async function handleSubmit(e){
             e.preventDefault()
@@ -39,7 +39,7 @@ const navigate = useNavigate()
                 password:""
             })
             } catch (error) {
-                toast.error(error.response.data.message)
+                toast.error(error.response?.data?.message)
           
     
             }
@@ -54,6 +54,7 @@ const navigate = useNavigate()
 
             let userData = await googleAuth()
             if(!userData){
+                setLoginWithGoogle(true)
                 return 
             }
 
@@ -100,8 +101,18 @@ const navigate = useNavigate()
       }
     };
 
+
+    if(loginWithGoogle){
     handleRedirect();
-  }, [dispatch, navigate]);
+  
+
+    }
+
+    return ()=>{
+        setLoginWithGoogle(false)
+    }
+  // }, [dispatch, navigate]);
+  }, [loginWithGoogle]);
 
 
     useEffect(()=>{
