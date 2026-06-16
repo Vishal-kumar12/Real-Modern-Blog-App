@@ -29,10 +29,11 @@ module.exports = {
     FIREBASE_UNIVERSAL_DOMAIN : process.env.FIREBASE_UNIVERSAL_DOMAIN,
     
 
+    FRONTEND_URL: process.env.FRONTEND_URL
+
     
 
 
-    FRONTEND_URL : process.env.FRONTEND_URL
 }
    
 

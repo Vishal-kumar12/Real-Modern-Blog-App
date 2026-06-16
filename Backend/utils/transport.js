@@ -1,5 +1,11 @@
 const nodemailer = require('nodemailer')
-const { EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS } = require('../config/dotenv.config')
+const { EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS, FRONTEND_URL} = require('../config/dotenv.config')
+
+
+
+
+
+
 
 const transporter = nodemailer.createTransport({
     host: EMAIL_HOST,
@@ -12,3 +18,4 @@ const transporter = nodemailer.createTransport({
 })
 
 module.exports = transporter
+

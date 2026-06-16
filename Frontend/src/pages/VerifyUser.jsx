@@ -12,7 +12,7 @@ function VerifyUser() {
             let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/verify-email/${verificationToken}`)
             toast.success(res.data.message)
 
-            navigate('/signin')
+            // navigate('/signin')
             
 
         } catch (error) {

@@ -14,8 +14,6 @@ const { FIREBASE_TYPE, FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY_ID, FIREBASE_PR
 
 
 
-
-
 admin.initializeApp({
   credential: admin.credential.cert({
     type: FIREBASE_TYPE,
@@ -34,7 +32,6 @@ admin.initializeApp({
 
 
 
- 
 
 
 
@@ -171,7 +168,9 @@ async function createUser(req, res) {
         <a href="${FRONTEND_URL}verify-email/${verificationToken}" >verify email</a>`,
           });
         }
-        await sendEmail();
+        
+        sendEmail();
+
 
         return res.status(400).json({
           success: false,
@@ -212,7 +211,10 @@ async function createUser(req, res) {
         <a href="${FRONTEND_URL}verify-email/${verificationToken}" >verify email</a>`,
       });
     }
-    await sendEmail();
+     sendEmail();
+    
+
+       
 
 
     return res.status(200).json({
@@ -401,7 +403,12 @@ async function login(req, res) {
         <a href="${FRONTEND_URL}verify-email/${verificationToken}" >verify email</a>`,
         });
       }
-      await sendEmail();
+       sendEmail();
+
+
+
+
+
 
       return res.status(400).json({
         success: false,
