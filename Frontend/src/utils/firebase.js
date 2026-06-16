@@ -98,6 +98,8 @@ export async function googleAuth() {
   }
 }
 
+
+
 export async function handleRedirectResult() {
   try {
     const result = await getRedirectResult(auth);
