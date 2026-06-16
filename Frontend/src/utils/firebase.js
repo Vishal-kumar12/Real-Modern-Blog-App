@@ -81,7 +81,11 @@ export async function googleAuth() {
       // Use redirect method for mobile
       await signInWithRedirect(auth, provider);
 
-      return null
+       const result = await getRedirectResult(auth);
+       if (result) {
+         return result.user;
+       }
+
       
     } else {
       // Use popup for desktop
